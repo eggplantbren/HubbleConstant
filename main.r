@@ -7,7 +7,7 @@ m = jags.model(file="model.txt")
 update(m, 10000)
 
 # Do the real MCMC
-draw = jags.samples(m, 10000, thin=1, variable.names = c("H0", "blah"))
+draw = jags.samples(m, 10000, thin=1, variable.names = c("H0"))
 
 # Manipulate the output into a list
 results = list()
@@ -19,4 +19,6 @@ for(name in names(draw))
 		temp = t(temp)
 	results[[name]] = as.array(temp)
 }
+
+hist(results$H0, breaks=100)
 
