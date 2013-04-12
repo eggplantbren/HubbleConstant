@@ -1,6 +1,6 @@
 library('rjags')
 
-data = source('data.txt')$value
+data = source('data1.txt')$value
 
 # Create the JAGS model object
 m = jags.model(file="model1.txt", data=data)
