@@ -22,5 +22,5 @@ for(name in names(draw))
 	results[[name]] = as.array(temp)
 }
 
-hist(results$H0, breaks=1000)
+hist(results$H0, breaks=100)
 

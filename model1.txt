@@ -1,16 +1,19 @@
-# A simple model where the quoted error bars (sig)
-# are interpreted literally.
+# A simple model where the quoted error bars
+# (sig) may be wrong, by replacing the normal
+# distribution with a t-distribution.
 
 model
 {
-	# Have a multiscale prior on H0
-	log_sig_H0 ~ dunif(-10., 10.)
-	H0 ~ dnorm(0., pow(exp(log_sig_H0), -2))
+	# Cauchy prior on H0
+	H0 ~ dt(0., pow(100., -2), 1.)
+
+	# Heavy-tailedness of likelihood
+	log_nu ~ dunif(0., 5.)
 
 	# Data
 	for(i in 1:N)
 	{
-		y[i] ~ dnorm(H0, pow(sig[i], -2))
+		y[i] ~ dt(H0, pow(sig[i], -2), exp(log_nu))
 	}
 }
 
