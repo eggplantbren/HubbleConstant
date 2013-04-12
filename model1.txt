@@ -1,0 +1,16 @@
+# A simple model where the quoted error bars (sig)
+# are interpreted literally.
+
+model
+{
+	# Have a multiscale prior on H0
+	log_sig_H0 ~ dunif(-10., 10.)
+	H0 ~ dnorm(0., pow(exp(log_sig_H0), -2))
+
+	# Data
+	for(i in 1:N)
+	{
+		y[i] ~ dnorm(H0, pow(sig[i], -2))
+	}
+}
+
