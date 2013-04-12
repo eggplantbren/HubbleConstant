@@ -1,0 +1,24 @@
+# A simple model where the quoted error bars
+# (sig) may be wrong, by replacing the normal
+# distribution with a t-distribution.
+
+model
+{
+	# Cauchy prior on H0
+	H0 ~ dt(0., pow(100., -2), 1.)
+
+	# Heavy-tailedness of likelihood
+	log_nu ~ dunif(0., 5.)
+
+	# Groupthink parameter
+	groupthink ~ dunif(0., 1.)
+
+	# Likelihood
+	y[1] ~ dt(H0, pow(sig[1], -2), exp(log_nu))
+	for(i in 2:N)
+	{
+		y[i] ~ dt((1. - groupthink)*H0 + groupthink*
+				mean(y[1:i-1]), pow(sig[i], -2), exp(log_nu))
+	}
+}
+
