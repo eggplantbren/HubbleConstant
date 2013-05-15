@@ -1,15 +1,15 @@
 library('rjags')
 
-data = source('data1.txt')$value
+source('data1.txt')
 
 # Create the JAGS model object
 m = jags.model(file="model1.txt", data=data)
 
 # Do some burn-in
-update(m, 100000)
+update(m, 50000)
 
 # Do the real MCMC
-draw = jags.samples(m, 100000, thin=10, variable.names = c("H0"))
+draw = jags.samples(m, 50000, thin=10, variable.names = c("H0", "log_nu", "log_K"))
 
 # Manipulate the output into a list
 results = list()
