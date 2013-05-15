@@ -10,10 +10,13 @@ model
 	# Heavy-tailedness of likelihood
 	log_nu ~ dunif(0., 5.)
 
+	# Scale sigmas
+	log_K ~ dt(0., pow(0.1, -2), 1.)
+
 	# Data
 	for(i in 1:N)
 	{
-		y[i] ~ dt(H0, pow(sig[i], -2), exp(log_nu))
+		y[i] ~ dt(H0, pow(sig[i]*exp(log_K), -2), exp(log_nu))
 	}
 }
 
