@@ -1,6 +1,7 @@
 library('rjags')
 
-source('data1.txt')
+data = as.matrix(read.table('h0_data.txt', header=FALSE))
+data = list(y=data[,1], sig=data[,2], N=length(data[,1]))
 
 # Create the JAGS model object
 m = jags.model(file="model1.txt", data=data)
